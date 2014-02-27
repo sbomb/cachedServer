@@ -56,17 +56,11 @@ public class NIOServer {
 					SelectionKey key = (SelectionKey) iter.next();
 					iter.remove();
 					try{
-						handleKey(key);
-//						Thread.sleep(100) ; 
+//						handleKey(key);
+						new Thread(new XServer(key, selector)).run() ;
 					}catch(Exception e){
 					}
 				}
-				
-//				
-//				for(SelectionKey key : keys){
-//					handleKey(key) ; 
-//					keys.remove(key) ; 
-//				}
 			}
 		} catch (IOException e) {
 		}
@@ -120,7 +114,7 @@ public class NIOServer {
 
 	public static void main(String[] args) {
 		System.out.println( Runtime.getRuntime().totalMemory() / 1024 /1024+ "MB");
-		for(int i = 0 ; i < 200002 ; i ++ ){
+		for(int i = 0 ; i < 2000000 ; i ++ ){
 			Queue.put("test", "key_" + i, "value-"+ i + "ÖÐÎÄ") ; 
 		}
 		try {
